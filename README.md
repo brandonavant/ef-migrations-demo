@@ -39,6 +39,26 @@ docker compose up --build
 
 In order to create the database schema on the running Docker Postgres instance, you will need to run the following commands from within the `/src/ORMDemo.API` directory.
 
+
+> IMPORTANT NOTE: There's a bug (which I need to fix) which requires you to modify this line in `Program.cs`:
+
+```csharp
+builder.Services.AddDbContext<DemoContext>(options =>
+    options.UseNpgsql("Host=postgres;Database=demo;Username=postgres;Password=demopassword")
+);
+```
+
+> to be this:
+
+```csharp
+builder.Services.AddDbContext<DemoContext>(options =>
+    options.UseNpgsql("Host=postgres;Database=demo;Username=postgres;Password=demopassword")
+);
+```
+
+> You have to toggle between the two values to ensure that it uses the former when building the Docker image and the latter for `dotnet ef` commands. I will get this fixed soon.
+
+
 First, to prepare the migrations scripts:
 
 ```bash
