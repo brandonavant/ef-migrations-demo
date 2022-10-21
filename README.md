@@ -52,7 +52,7 @@ builder.Services.AddDbContext<DemoContext>(options =>
 
 ```csharp
 builder.Services.AddDbContext<DemoContext>(options =>
-    options.UseNpgsql("Host=postgres;Database=demo;Username=postgres;Password=demopassword")
+    options.UseNpgsql("Host=localhost;Database=demo;Username=postgres;Password=demopassword")
 );
 ```
 
