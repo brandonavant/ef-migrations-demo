@@ -1,0 +1,29 @@
+version: "3.1"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: demopassword
+    ports:
+      - '5432:5432'
+    networks:
+      - demo-network
+    # volumes:
+    #   - "./scripts/database:/docker-entrypoint-initdb.d:rw"
+  orm-demo:
+    container_name: orm-demo
+    build:
+      args:
+        - ASPNETCORE_ENVIRONMENT_ARG=Local
+        - BUILD_CONFIGURATION_ARG=Debug
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - "5000:80"
+    networks:
+      - demo-network
+networks:
+  demo-network:
